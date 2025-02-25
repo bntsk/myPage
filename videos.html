@@ -49,27 +49,23 @@
 </head>
 <body>
     <div class="video-container">
-        {% if files %}
-            {% for file in files %}
-            <div class="video-item">
-                <video controls>
-                    <source src="https://api.telegram.org/file/bot{{ bot_token }}/{{ file.file_id }}" type="video/mp4">
-                    Ваш браузер не поддерживает видео.
-                </video>
-                <form method="post">
-                    <input type="hidden" name="file_id" value="{{ file.file_id }}">
-                    <select name="category">
-                        <option value="Main" {% if file.category == 'Main' %}selected{% endif %}>Main</option>
-                        <option value="Secondary" {% if file.category == 'Secondary' %}selected{% endif %}>Secondary</option>
-                        <option value="Filler" {% if file.category == 'Filler' %}selected{% endif %}>Filler</option>
-                    </select>
-                    <button type="submit">Сохранить</button>
-                </form>
-            </div>
-            {% endfor %}
-        {% else %}
-            <p>Вы еще не загрузили видео.</p>
-        {% endif %}
+        {% for file in files or [] %}
+        <div class="video-item">
+            <video controls>
+                <source src="https://api.telegram.org/file/bot{{ bot_token }}/{{ file.file_id }}" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+            <form method="post">
+                <input type="hidden" name="file_id" value="{{ file.file_id }}">
+                <select name="category">
+                    <option value="Main" {% if file.category == 'Main' %}selected{% endif %}>Main</option>
+                    <option value="Secondary" {% if file.category == 'Secondary' %}selected{% endif %}>Secondary</option>
+                    <option value="Filler" {% if file.category == 'Filler' %}selected{% endif %}>Filler</option>
+                </select>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>
